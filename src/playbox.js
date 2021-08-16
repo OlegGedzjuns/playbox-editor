@@ -7,7 +7,14 @@ const EDGES = {
 const NODES = {
     START: 0,
     INTERVAL: 1,
-    TRANSLATE: 2,
+    TRANSLATION: 2,
+    SCALE: 3,
+    ROTATION: 4,
+    TRANSLATE: 5,
+    RESIZE: 6,
+    ROTATE: 7,
+    VISIBILITY: 8,
+    PLAYER_CONTROLLER: 9,
 };
 
 const styleString = `
@@ -117,8 +124,14 @@ editor.method('playbox', function () {
                 [EDGES.BASE]: {
                     stroke: '#0379EE',
                     strokeWidth: 1,
+                    smoothInOut: true,
                     targetMarker: true,
-                    contextMenuItems: [],
+                    contextMenuItems: [
+                        {
+                            text: 'Delete edge',
+                            action: 'EVENT_DELETE_EDGE'
+                        }
+                    ],
                 },
             },
             nodes: {
@@ -129,11 +142,6 @@ editor.method('playbox', function () {
                     iconColor: '#14CC47',
                     stroke: '#20292b',
                     contextMenuItems: [
-                        {
-                            text: 'Add transition',
-                            action: 'EVENT_ADD_EDGE',
-                            edgeType: EDGES.BASE,
-                        },
                         {
                             text: 'Delete',
                             action: 'EVENT_DELETE_NODE',
@@ -148,11 +156,6 @@ editor.method('playbox', function () {
                     iconColor: '#FFFFFF',
                     contextMenuItems: [
                         {
-                            text: 'Add transition',
-                            action: 'EVENT_ADD_EDGE',
-                            edgeType: EDGES.BASE,
-                        },
-                        {
                             text: 'Delete',
                             action: 'EVENT_DELETE_NODE',
                         },
@@ -166,38 +169,33 @@ editor.method('playbox', function () {
 					inPorts: [
 						{
 							name: 'first',
-							edgeType: '0',
-							type: '0'
+							edgeType: EDGES.BASE,
+							type: 0
 						},
 						{
 							name: 'second',
-							edgeType: '0',
-							type: '0'
+							edgeType: EDGES.BASE,
+							type: 0
 						}
 					],
 					outPorts: [
 						{
 							name: 'first',
-							type: '0'
+							type: 0
 						},
 						{
 							name: 'second',
-							type: '0'
+							type: 0
 						}
 					]
                 },
-                [NODES.TRANSLATE]: {
-                    name: 'translate',
+                [NODES.TRANSLATION]: {
+                    name: 'translation',
                     fill: 'rgb(54, 67, 70, 0.8)',
                     stroke: '#20292b',
                     icon: '',
                     iconColor: '#FFFFFF',
                     contextMenuItems: [
-                        {
-                            text: 'Add transition',
-                            action: 'EVENT_ADD_EDGE',
-                            edgeType: EDGES.BASE,
-                        },
                         {
                             text: 'Delete',
                             action: 'EVENT_DELETE_NODE',
@@ -220,16 +218,177 @@ editor.method('playbox', function () {
 					inPorts: [
 						{
 							name: 'first',
-							edgeType: '0',
-							type: '0'
+							edgeType: EDGES.BASE,
+							type: 0
 						},
 						{
 							name: 'second',
-							edgeType: '0',
-							type: '0'
+							edgeType: EDGES.BASE,
+							type: 0
 						}
 					],
                 },
+                [NODES.SCALE]: {
+                    name: 'scale',
+                    fill: 'rgb(54, 67, 70, 0.8)',
+                    stroke: '#20292b',
+                    icon: '',
+                    iconColor: '#FFFFFF',
+                    contextMenuItems: [
+                        {
+                            text: 'Delete',
+                            action: 'EVENT_DELETE_NODE'
+                        }
+                    ],
+                    attributes: [
+                        {
+                            name: 'x',
+                            type: 'NUMERIC_INPUT',
+                        },
+                        {
+                            name: 'y',
+                            type: 'NUMERIC_INPUT',
+                        },
+                        {
+                            name: 'z',
+                            type: 'NUMERIC_INPUT',
+                        }
+                    ]
+                },
+                [NODES.ROTATION]: {
+                    name: 'rotation',
+                    fill: 'rgb(54, 67, 70, 0.8)',
+                    stroke: '#20292b',
+                    icon: '',
+                    iconColor: '#FFFFFF',
+                    contextMenuItems: [
+                        {
+                            text: 'Delete',
+                            action: 'EVENT_DELETE_NODE'
+                        }
+                    ],
+                    attributes: [
+                        {
+                            name: 'x',
+                            type: 'NUMERIC_INPUT',
+                        },
+                        {
+                            name: 'y',
+                            type: 'NUMERIC_INPUT',
+                        },
+                        {
+                            name: 'z',
+                            type: 'NUMERIC_INPUT',
+                        }
+                    ]
+                },
+                [NODES.TRANSLATE]: {
+                    name: 'translate',
+                    fill: 'rgb(54, 67, 70, 0.8)',
+                    stroke: '#20292b',
+                    icon: '',
+                    iconColor: '#FFFFFF',
+                    contextMenuItems: [
+                        {
+                            text: 'Delete',
+                            action: 'EVENT_DELETE_NODE'
+                        }
+                    ],
+                    attributes: [
+                        {
+                            name: 'x',
+                            type: 'NUMERIC_INPUT',
+                        },
+                        {
+                            name: 'y',
+                            type: 'NUMERIC_INPUT',
+                        },
+                        {
+                            name: 'z',
+                            type: 'NUMERIC_INPUT',
+                        }
+                    ]
+                },
+                [NODES.RESIZE]: {
+                    name: 'resize',
+                    fill: 'rgb(54, 67, 70, 0.8)',
+                    stroke: '#20292b',
+                    icon: '',
+                    iconColor: '#FFFFFF',
+                    contextMenuItems: [
+                        {
+                            text: 'Delete',
+                            action: 'EVENT_DELETE_NODE'
+                        }
+                    ],
+                    attributes: [
+                        {
+                            name: 'x',
+                            type: 'NUMERIC_INPUT',
+                        },
+                        {
+                            name: 'y',
+                            type: 'NUMERIC_INPUT',
+                        },
+                        {
+                            name: 'z',
+                            type: 'NUMERIC_INPUT',
+                        }
+                    ]
+                },
+                [NODES.ROTATE]: {
+                    name: 'rotate',
+                    fill: 'rgb(54, 67, 70, 0.8)',
+                    stroke: '#20292b',
+                    icon: '',
+                    iconColor: '#FFFFFF',
+                    contextMenuItems: [
+                        {
+                            text: 'Delete',
+                            action: 'EVENT_DELETE_NODE'
+                        }
+                    ],
+                    attributes: [
+                        {
+                            name: 'x',
+                            type: 'NUMERIC_INPUT',
+                        },
+                        {
+                            name: 'y',
+                            type: 'NUMERIC_INPUT',
+                        },
+                        {
+                            name: 'z',
+                            type: 'NUMERIC_INPUT',
+                        }
+                    ]
+                },
+                [NODES.VISIBILITY]: {
+                    name: 'visibility',
+                    fill: 'rgb(54, 67, 70, 0.8)',
+                    stroke: '#20292b',
+                    icon: '',
+                    iconColor: '#FFFFFF',
+                    contextMenuItems: [
+                        {
+                            text: 'Delete',
+                            action: 'EVENT_DELETE_NODE'
+                        }
+                    ],
+                    attributes: [
+                        {
+                            name: 'visible',
+                            type: 'BOOLEAN_INPUT'
+                        }
+                    ]
+                },
+                [NODES.PLAYER_CONTROLLER]: {
+                    name: 'playerController',
+                    fill: 'rgb(54, 67, 70, 0.8)',
+                    stroke: '#20292b',
+                    icon: '',
+                    iconColor: '#FFFFFF',
+                }
             },
         };
 
@@ -244,6 +403,39 @@ editor.method('playbox', function () {
                 },
             },
             {
+                text: 'Translation',
+                action: 'EVENT_ADD_NODE',
+                nodeType: NODES.TRANSLATION,
+                attributes: {
+                    name: 'New translate',
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
+            },
+            {
+                text: 'Scale',
+                action: 'EVENT_ADD_NODE',
+                nodeType: NODES.SCALE,
+                attributes: {
+                    name: 'New scale',
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
+            },
+            {
+                text: 'Rotation',
+                action: 'EVENT_ADD_NODE',
+                nodeType: NODES.ROTATION,
+                attributes: {
+                    name: 'New rotation',
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
+            },
+            {
                 text: 'Translate',
                 action: 'EVENT_ADD_NODE',
                 nodeType: NODES.TRANSLATE,
@@ -252,6 +444,45 @@ editor.method('playbox', function () {
                     x: 0,
                     y: 0,
                     z: 0,
+                },
+            },
+            {
+                text: 'Resize',
+                action: 'EVENT_ADD_NODE',
+                nodeType: NODES.RESIZE,
+                attributes: {
+                    name: 'New resize',
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
+            },
+            {
+                text: 'Rotate',
+                action: 'EVENT_ADD_NODE',
+                nodeType: NODES.ROTATE,
+                attributes: {
+                    name: 'New rotate',
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
+            },
+            {
+                text: 'Visibility',
+                action: 'EVENT_ADD_NODE',
+                nodeType: NODES.VISIBILITY,
+                attributes: {
+                    name: 'New visibility',
+                    visible: true,
+                },
+            },
+            {
+                text: 'Player controller',
+                action: 'EVENT_ADD_NODE',
+                nodeType: NODES.PLAYER_CONTROLLER,
+                attributes: {
+                    name: 'New player controller',
                 },
             },
         ];
@@ -272,26 +503,39 @@ editor.method('playbox', function () {
                 adjustVertices: true,
                 readOnly: false,
                 incrementNodeNames: true,
+                edgeHoverEffect: true,
             },
         });
 
         PLAYBOX.graph.on('EVENT_ADD_NODE', n => {
-			console.log(n);
+			console.log('EVENT_ADD_NODE', n);
             PLAYBOX.data.nodes[n.id] = n;
         });
 		
 		PLAYBOX.graph.on('EVENT_DELETE_NODE', n => {
-			console.log(n);
+			console.log('EVENT_DELETE_NODE', n);
+
+            n.edges.forEach(e => delete PLAYBOX.data.edges[e]);
+
+            delete PLAYBOX.data.nodes[n.node.id];
 		});
 		
-		PLAYBOX.graph.on('EVENT_ADD_EDGE', n => {
-			console.log(n);
+		PLAYBOX.graph.on('EVENT_ADD_EDGE', edge => {
+            for (const [id, e] of Object.entries(PLAYBOX.data.edges)) {
+                if (e.to === edge.to && e.inPort === edge.inPort) {
+                    delete PLAYBOX.data.edges[id];
+                }
+            }
+
+            PLAYBOX.data.edges[edge.edgeId] = edge;
 		});
 		
-		PLAYBOX.graph.on('EVENT_DELETE_EDGE', n => {
-			console.log(n);
+		PLAYBOX.graph.on('EVENT_DELETE_EDGE', e => {
+			console.log('EVENT_DELETE_EDGE', e);
+            delete PLAYBOX.data.edges[e.edgeId];
 		});
 
         overlay.hidden = false;
     });
 });
+
