@@ -18,6 +18,7 @@ const NODES = {
     ROTATE: 7,
     VISIBILITY: 8,
     PLAYER_CONTROLLER: 9,
+    DELAY: 10,
 };
 
 const graphSchema = {
@@ -48,6 +49,13 @@ const graphSchema = {
                     action: 'EVENT_DELETE_NODE',
                 },
             ],
+            outPorts: [
+                {
+                    name: 'output',
+                    type: '0',
+                    edgeType: '0',
+                }
+            ]
         },
         [NODES.INTERVAL]: {
             name: 'interval',
@@ -178,6 +186,24 @@ const graphSchema = {
                     name: 'position',
                     type: 'VEC_3_INPUT',
                 },
+                {
+                    name: 'isRelative',
+                    type: 'BOOLEAN_INPUT',
+                },
+            ],
+            inPorts: [
+                {
+                    name: 'input',
+                    type: '0',
+                    edgeType: '0',
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'output',
+                    type: '0',
+                    edgeType: '0',
+                }
             ]
         },
         [NODES.RESIZE]: {
@@ -197,6 +223,20 @@ const graphSchema = {
                     name: 'scale',
                     type: 'VEC_3_INPUT',
                 }
+            ],
+            inPorts: [
+                {
+                    name: 'input',
+                    type: '0',
+                    edgeType: '0',
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'output',
+                    type: '0',
+                    edgeType: '0',
+                }
             ]
         },
         [NODES.ROTATE]: {
@@ -215,6 +255,20 @@ const graphSchema = {
                 {
                     name: 'angle',
                     type: 'VEC_3_INPUT',
+                }
+            ],
+            inPorts: [
+                {
+                    name: 'input',
+                    type: '0',
+                    edgeType: '0',
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'output',
+                    type: '0',
+                    edgeType: '0',
                 }
             ]
         },
@@ -243,10 +297,49 @@ const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
+            contextMenuItems: [
+                {
+                    text: 'Delete',
+                    action: 'EVENT_DELETE_NODE'
+                }
+            ],
             attributes: [
                 {
                     name: 'speed',
                     type: 'NUMERIC_INPUT'
+                }
+            ]
+        },
+        [NODES.DELAY]: {
+            name: 'delay',
+            fill: 'rgb(54, 67, 70, 0.8)',
+            stroke: '#20292b',
+            icon: '',
+            iconColor: '#FFFFFF',
+            contextMenuItems: [
+                {
+                    text: 'Delete',
+                    action: 'EVENT_DELETE_NODE'
+                }
+            ],
+            attributes: [
+                {
+                    name: 'delayMs',
+                    type: 'NUMERIC_INPUT'
+                }
+            ],
+            inPorts: [
+                {
+                    name: 'input',
+                    type: '0',
+                    edgeType: '0',
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'output',
+                    type: '0',
+                    edgeType: '0',
                 }
             ]
         }
@@ -255,12 +348,20 @@ const graphSchema = {
 
 const menuItems = [
     {
+        text: 'Start',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.START,
+        attributes: {
+            name: 'START',
+        },
+    },
+    {
         text: 'Interval',
         action: 'EVENT_ADD_NODE',
         nodeType: NODES.INTERVAL,
         attributes: {
             name: 'New interval',
-            delay: 1000,
+            intervalMs: 1000,
         },
     },
     {
@@ -312,7 +413,8 @@ const menuItems = [
                 x: 0,
                 y: 0,
                 z: 0,
-            }
+            },
+            isRelative: false,
         },
     },
     {
@@ -357,6 +459,15 @@ const menuItems = [
         attributes: {
             name: 'New player controller',
             speed: 0
+        },
+    },
+    {
+        text: 'Delay',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.DELAY,
+        attributes: {
+            name: 'New delay',
+            delayMs: 1000
         },
     },
 ];
@@ -471,23 +582,6 @@ editor.method('playbox', function () {
             graphSchema: graphSchema,
             contextMenuItems: menuItems,
         });
-
-        PLAYBOX.graph.on('EVENT_ADD_NODE', n => {
-            PLAYBOX.data.nodes[n.id] = n;
-        });
-		
-		PLAYBOX.graph.on('EVENT_DELETE_NODE', n => {
-            n.edges.forEach(e => delete PLAYBOX.data.edges[e]);
-            delete PLAYBOX.data.nodes[n.node.id];
-		});
-		
-		PLAYBOX.graph.on('EVENT_ADD_EDGE', e => {
-            PLAYBOX.data.edges[e.edgeId] = e;
-		});
-		
-		PLAYBOX.graph.on('EVENT_DELETE_EDGE', e => {
-            delete PLAYBOX.data.edges[e.edgeId];
-		});
 
         overlay.hidden = false;
     });
