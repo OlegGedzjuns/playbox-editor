@@ -124,8 +124,8 @@ editor.method('playbox', function () {
                 [EDGES.BASE]: {
                     stroke: '#0379EE',
                     strokeWidth: 1,
-                    smoothInOut: true,
-                    targetMarker: true,
+                    smooth: true,
+                    targetMarker: null,
                     contextMenuItems: [
                         {
                             text: 'Delete edge',
@@ -169,12 +169,10 @@ editor.method('playbox', function () {
 					inPorts: [
 						{
 							name: 'first',
-							edgeType: EDGES.BASE,
 							type: 0
 						},
 						{
 							name: 'second',
-							edgeType: EDGES.BASE,
 							type: 0
 						}
 					],
@@ -503,37 +501,69 @@ editor.method('playbox', function () {
                 adjustVertices: true,
                 readOnly: false,
                 incrementNodeNames: true,
-                edgeHoverEffect: true,
+                edgeHoverEffect: false,
+                passiveUIEvents: false
             },
         });
 
+        const events = {
+            ADD_NODE: "EVENT_ADD_NODE",
+            DELETE_NODE: "EVENT_DELETE_NODE",
+            SELECT_NODE: "EVENT_SELECT_NODE",
+            UPDATE_NODE_POSITION: "EVENT_UPDATE_NODE_POSITION",
+            UPDATE_NODE_ATTRIBUTE: "EVENT_UPDATE_NODE_ATTRIBUTE",
+            ADD_EDGE: "EVENT_ADD_EDGE",
+            DELETE_EDGE: "EVENT_DELETE_EDGE",
+            SELECT_EDGE: "EVENT_SELECT_EDGE",
+            DESELECT_ITEM: "EVENT_DESELECT_ITEM",
+            UPDATE_TRANSLATE: "EVENT_UPDATE_TRANSLATE",
+            UPDATE_SCALE: "EVENT_UPDATE_SCALE"
+        }
+
+        for (const key in events) {
+            PLAYBOX.graph.on(events[key], () => console.log("EVENT: ", key));
+        }
+
         PLAYBOX.graph.on('EVENT_ADD_NODE', n => {
-			console.log('EVENT_ADD_NODE', n);
+            console.log('EVENT_ADD_NODE: ', n);
             PLAYBOX.data.nodes[n.id] = n;
         });
 		
 		PLAYBOX.graph.on('EVENT_DELETE_NODE', n => {
-			console.log('EVENT_DELETE_NODE', n);
-
+            console.log('EVENT_DELETE_NODE: ', n);
             n.edges.forEach(e => delete PLAYBOX.data.edges[e]);
-
             delete PLAYBOX.data.nodes[n.node.id];
 		});
 		
 		PLAYBOX.graph.on('EVENT_ADD_EDGE', edge => {
+            console.log('EVENT_ADD_EDGE: ', edge);
             for (const [id, e] of Object.entries(PLAYBOX.data.edges)) {
                 if (e.to === edge.to && e.inPort === edge.inPort) {
                     delete PLAYBOX.data.edges[id];
                 }
             }
 
+            console.log(edge);
             PLAYBOX.data.edges[edge.edgeId] = edge;
 		});
 		
 		PLAYBOX.graph.on('EVENT_DELETE_EDGE', e => {
-			console.log('EVENT_DELETE_EDGE', e);
+            console.log('EVENT_DELETE_EDGE: ', e);
             delete PLAYBOX.data.edges[e.edgeId];
 		});
+
+        const edge = {
+            edge: {
+                edgeType: 0,
+                from: '0',
+                to: '1',
+                inPort: 0,
+                outPort: 0
+            },
+            edgeId: '3'
+        }
+
+        PLAYBOX.graph.createEdge(edge.edge, edge.edgeId, false);
 
         overlay.hidden = false;
     });
