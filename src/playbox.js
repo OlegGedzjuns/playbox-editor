@@ -368,9 +368,11 @@ editor.method('playbox', function () {
                 nodeType: NODES.TRANSLATION,
                 attributes: {
                     name: 'New translate',
-                    x: 0,
-                    y: 0,
-                    z: 0,
+                    direction: {
+                        x: 0,
+                        y: 0, 
+                        z: 0
+                    }
                 },
             },
             {
@@ -379,9 +381,11 @@ editor.method('playbox', function () {
                 nodeType: NODES.SCALE,
                 attributes: {
                     name: 'New scale',
-                    x: 0,
-                    y: 0,
-                    z: 0,
+                    scaleFactor: {
+                        x: 0,
+                        y: 0,
+                        z: 0,
+                    }
                 },
             },
             {
@@ -390,9 +394,11 @@ editor.method('playbox', function () {
                 nodeType: NODES.ROTATION,
                 attributes: {
                     name: 'New rotation',
-                    x: 0,
-                    y: 0,
-                    z: 0,
+                    angularVelocity: {
+                        x: 0,
+                        y: 0,
+                        z: 0,
+                    }
                 },
             },
             {
@@ -401,9 +407,11 @@ editor.method('playbox', function () {
                 nodeType: NODES.TRANSLATE,
                 attributes: {
                     name: 'New translate',
-                    x: 0,
-                    y: 0,
-                    z: 0,
+                    position: {
+                        x: 0,
+                        y: 0,
+                        z: 0,
+                    }
                 },
             },
             {
@@ -412,9 +420,11 @@ editor.method('playbox', function () {
                 nodeType: NODES.RESIZE,
                 attributes: {
                     name: 'New resize',
-                    x: 0,
-                    y: 0,
-                    z: 0,
+                    scale: {
+                        x: 0,
+                        y: 0,
+                        z: 0,
+                    }
                 },
             },
             {
@@ -423,9 +433,11 @@ editor.method('playbox', function () {
                 nodeType: NODES.ROTATE,
                 attributes: {
                     name: 'New rotate',
-                    x: 0,
-                    y: 0,
-                    z: 0,
+                    angle: {
+                        x: 0,
+                        y: 0,
+                        z: 0,
+                    }
                 },
             },
             {
@@ -443,6 +455,7 @@ editor.method('playbox', function () {
                 nodeType: NODES.PLAYER_CONTROLLER,
                 attributes: {
                     name: 'New player controller',
+                    speed: 0
                 },
             },
         ];
