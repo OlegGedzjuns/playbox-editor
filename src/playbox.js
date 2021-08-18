@@ -162,28 +162,32 @@ editor.method('playbox', function () {
                     ],
                     attributes: [
                         {
-                            name: 'delay',
+                            name: 'intervalMs',
                             type: 'NUMERIC_INPUT',
                         },
                     ],
 					inPorts: [
 						{
 							name: 'first',
-							type: 0
+							type: '0',
+                            edgeType: '0',
 						},
 						{
 							name: 'second',
-							type: 0
+							type: '0',
+                            edgeType: '0',
 						}
 					],
 					outPorts: [
 						{
 							name: 'first',
-							type: 0
+							type: '0',
+                            edgeType: '0',
 						},
 						{
 							name: 'second',
-							type: 0
+							type: '0',
+                            edgeType: '0',
 						}
 					]
                 },
@@ -201,28 +205,20 @@ editor.method('playbox', function () {
                     ],
                     attributes: [
                         {
-                            name: 'x',
-                            type: 'NUMERIC_INPUT',
-                        },
-                        {
-                            name: 'y',
-                            type: 'NUMERIC_INPUT',
-                        },
-                        {
-                            name: 'z',
-                            type: 'NUMERIC_INPUT',
+                            name: 'direction',
+                            type: 'VEC_3_INPUT',
                         },
                     ],
 					inPorts: [
 						{
 							name: 'first',
-							edgeType: EDGES.BASE,
-							type: 0
+							type: '0',
+                            edgeType: '0',
 						},
 						{
 							name: 'second',
-							edgeType: EDGES.BASE,
-							type: 0
+							type: '0',
+                            edgeType: '0',
 						}
 					],
                 },
@@ -240,17 +236,9 @@ editor.method('playbox', function () {
                     ],
                     attributes: [
                         {
-                            name: 'x',
-                            type: 'NUMERIC_INPUT',
+                            name: 'scaleFactor',
+                            type: 'VEC_3_INPUT',
                         },
-                        {
-                            name: 'y',
-                            type: 'NUMERIC_INPUT',
-                        },
-                        {
-                            name: 'z',
-                            type: 'NUMERIC_INPUT',
-                        }
                     ]
                 },
                 [NODES.ROTATION]: {
@@ -267,17 +255,9 @@ editor.method('playbox', function () {
                     ],
                     attributes: [
                         {
-                            name: 'x',
-                            type: 'NUMERIC_INPUT',
+                            name: 'angularVelocity',
+                            type: 'VEC_3_INPUT',
                         },
-                        {
-                            name: 'y',
-                            type: 'NUMERIC_INPUT',
-                        },
-                        {
-                            name: 'z',
-                            type: 'NUMERIC_INPUT',
-                        }
                     ]
                 },
                 [NODES.TRANSLATE]: {
@@ -294,17 +274,9 @@ editor.method('playbox', function () {
                     ],
                     attributes: [
                         {
-                            name: 'x',
-                            type: 'NUMERIC_INPUT',
+                            name: 'position',
+                            type: 'VEC_3_INPUT',
                         },
-                        {
-                            name: 'y',
-                            type: 'NUMERIC_INPUT',
-                        },
-                        {
-                            name: 'z',
-                            type: 'NUMERIC_INPUT',
-                        }
                     ]
                 },
                 [NODES.RESIZE]: {
@@ -321,16 +293,8 @@ editor.method('playbox', function () {
                     ],
                     attributes: [
                         {
-                            name: 'x',
-                            type: 'NUMERIC_INPUT',
-                        },
-                        {
-                            name: 'y',
-                            type: 'NUMERIC_INPUT',
-                        },
-                        {
-                            name: 'z',
-                            type: 'NUMERIC_INPUT',
+                            name: 'scale',
+                            type: 'VEC_3_INPUT',
                         }
                     ]
                 },
@@ -348,16 +312,8 @@ editor.method('playbox', function () {
                     ],
                     attributes: [
                         {
-                            name: 'x',
-                            type: 'NUMERIC_INPUT',
-                        },
-                        {
-                            name: 'y',
-                            type: 'NUMERIC_INPUT',
-                        },
-                        {
-                            name: 'z',
-                            type: 'NUMERIC_INPUT',
+                            name: 'angle',
+                            type: 'VEC_3_INPUT',
                         }
                     ]
                 },
@@ -386,6 +342,12 @@ editor.method('playbox', function () {
                     stroke: '#20292b',
                     icon: '',
                     iconColor: '#FFFFFF',
+                    attributes: [
+                        {
+                            name: 'speed',
+                            type: 'NUMERIC_INPUT'
+                        }
+                    ]
                 }
             },
         };
@@ -499,10 +461,7 @@ editor.method('playbox', function () {
             contextMenuItems: menuItems,
             config: {
                 adjustVertices: true,
-                readOnly: false,
-                incrementNodeNames: true,
-                edgeHoverEffect: false,
-                passiveUIEvents: false
+                incrementNodeNames: false,
             },
         });
 
@@ -537,13 +496,12 @@ editor.method('playbox', function () {
 		
 		PLAYBOX.graph.on('EVENT_ADD_EDGE', edge => {
             console.log('EVENT_ADD_EDGE: ', edge);
-            for (const [id, e] of Object.entries(PLAYBOX.data.edges)) {
-                if (e.to === edge.to && e.inPort === edge.inPort) {
-                    delete PLAYBOX.data.edges[id];
-                }
-            }
+            // for (const [id, e] of Object.entries(PLAYBOX.data.edges)) {
+            //     if (e.to === edge.to && e.inPort === edge.inPort) {
+            //         delete PLAYBOX.data.edges[id];
+            //     }
+            // }
 
-            console.log(edge);
             PLAYBOX.data.edges[edge.edgeId] = edge;
 		});
 		
@@ -552,7 +510,7 @@ editor.method('playbox', function () {
             delete PLAYBOX.data.edges[e.edgeId];
 		});
 
-        const edge = {
+        const edge1 = {
             edge: {
                 edgeType: 0,
                 from: '0',
@@ -563,7 +521,19 @@ editor.method('playbox', function () {
             edgeId: '3'
         }
 
-        PLAYBOX.graph.createEdge(edge.edge, edge.edgeId, false);
+        const edge2 = {
+            edge: {
+                edgeType: 0,
+                from: '0',
+                to: '1',
+                inPort: 1,
+                outPort: 1
+            },
+            edgeId: '3'
+        }
+
+        PLAYBOX.graph.createEdge(edge1.edge, edge1.edgeId, false);
+        PLAYBOX.graph.createEdge(edge2.edge, edge2.edgeId, false);
 
         overlay.hidden = false;
     });
