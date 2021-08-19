@@ -19,6 +19,10 @@ const NODES = {
     VISIBILITY: 8,
     PLAYER_CONTROLLER: 9,
     DELAY: 10,
+    GRAPH_TRANSMITTER: 11,
+    GRAPH_RECEIVER: 12,
+    BIRD_CONTROLLER: 13,
+    COLLISION_START: 14,
 };
 
 const graphSchema = {
@@ -77,24 +81,14 @@ const graphSchema = {
             ],
             inPorts: [
                 {
-                    name: 'first',
+                    name: 'input',
                     type: '0',
-                    edgeType: '0',
-                },
-                {
-                    name: 'second',
-                    type: '0',
-                    edgeType: '0',
+                    edgeType: '0'
                 }
             ],
             outPorts: [
                 {
-                    name: 'first',
-                    type: '0',
-                    edgeType: '0',
-                },
-                {
-                    name: 'second',
+                    name: 'output',
                     type: '0',
                     edgeType: '0',
                 }
@@ -117,19 +111,7 @@ const graphSchema = {
                     name: 'direction',
                     type: 'VEC_3_INPUT',
                 },
-            ],
-            inPorts: [
-                {
-                    name: 'first',
-                    type: '0',
-                    edgeType: '0',
-                },
-                {
-                    name: 'second',
-                    type: '0',
-                    edgeType: '0',
-                }
-            ],
+            ]
         },
         [NODES.SCALE]: {
             name: 'scale',
@@ -342,6 +324,91 @@ const graphSchema = {
                     edgeType: '0',
                 }
             ]
+        },
+        [NODES.GRAPH_TRANSMITTER]: {
+            name: 'graphTransmitter',
+            fill: 'rgb(54, 67, 70, 0.8)',
+            stroke: '#20292b',
+            icon: '',
+            iconColor: '#FFFFFF',
+            contextMenuItems: [
+                {
+                    text: 'Delete',
+                    action: 'EVENT_DELETE_NODE'
+                }
+            ],
+            attributes: [
+                {
+                    name: 'entityGuid',
+                    type: 'TEXT_INPUT'
+                }
+            ],
+            inPorts: [
+                {
+                    name: 'input',
+                    type: '0',
+                    edgeType: '0',
+                }
+            ],
+        },
+        [NODES.GRAPH_RECEIVER]: {
+            name: 'graphReceiver',
+            fill: 'rgb(54, 67, 70, 0.8)',
+            stroke: '#20292b',
+            icon: '',
+            iconColor: '#FFFFFF',
+            contextMenuItems: [
+                {
+                    text: 'Delete',
+                    action: 'EVENT_DELETE_NODE'
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'output',
+                    type: '0',
+                    edgeType: '0',
+                }
+            ],
+        },
+        [NODES.BIRD_CONTROLLER]: {
+            name: 'birdController',
+            fill: 'rgb(54, 67, 70, 0.8)',
+            stroke: '#20292b',
+            icon: '',
+            iconColor: '#FFFFFF',
+            contextMenuItems: [
+                {
+                    text: 'Delete',
+                    action: 'EVENT_DELETE_NODE'
+                }
+            ]
+        },
+        [NODES.COLLISION_START]: {
+            name: 'collisionStart',
+            fill: 'rgb(54, 67, 70, 0.8)',
+            stroke: '#20292b',
+            icon: '',
+            iconColor: '#FFFFFF',
+            contextMenuItems: [
+                {
+                    text: 'Delete',
+                    action: 'EVENT_DELETE_NODE'
+                }
+            ],
+            attributes: [
+                {
+                    name: 'tag',
+                    type: 'TEXT_INPUT'
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'output',
+                    type: '0',
+                    edgeType: '0',
+                }
+            ]
         }
     },
 };
@@ -470,6 +537,40 @@ const menuItems = [
             delayMs: 1000
         },
     },
+    {
+        text: 'Graph Transmitter',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.GRAPH_TRANSMITTER,
+        attributes: {
+            name: 'New graph transmitter',
+            entityGuid: 0
+        },
+    },
+    {
+        text: 'Graph Receiver',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.GRAPH_RECEIVER,
+        attributes: {
+            name: 'New graph receiver'
+        },
+    },
+    {
+        text: 'Bird controller',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.BIRD_CONTROLLER,
+        attributes: {
+            name: 'New bird controller'
+        },
+    },
+    {
+        text: 'Collision start',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.COLLISION_START,
+        attributes: {
+            name: 'New collision start',
+            tag: '',
+        }
+    }
 ];
 
 const styleString = `
