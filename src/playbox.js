@@ -23,6 +23,8 @@ const NODES = {
     GRAPH_RECEIVER: 12,
     BIRD_CONTROLLER: 13,
     COLLISION_START: 14,
+    TRIGGER_ENTER: 15,
+    SPAWN: 16,
 };
 
 const graphSchema = {
@@ -409,7 +411,66 @@ const graphSchema = {
                     edgeType: '0',
                 }
             ]
-        }
+        },
+        [NODES.TRIGGER_ENTER]: {
+            name: 'triggerEnter',
+            fill: 'rgb(54, 67, 70, 0.8)',
+            stroke: '#20292b',
+            icon: '',
+            iconColor: '#FFFFFF',
+            contextMenuItems: [
+                {
+                    text: 'Delete',
+                    action: 'EVENT_DELETE_NODE'
+                }
+            ],
+            attributes: [
+                {
+                    name: 'tag',
+                    type: 'TEXT_INPUT'
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'output',
+                    type: '0',
+                    edgeType: '0',
+                }
+            ]
+        },
+        [NODES.SPAWN]: {
+            name: 'spawn',
+            fill: 'rgb(54, 67, 70, 0.8)',
+            stroke: '#20292b',
+            icon: '',
+            iconColor: '#FFFFFF',
+            contextMenuItems: [
+                {
+                    text: 'Delete',
+                    action: 'EVENT_DELETE_NODE'
+                }
+            ],
+            attributes: [
+                {
+                    name: 'position',
+                    type: 'VEC_3_INPUT',
+                }
+            ],
+            inPorts: [
+                {
+                    name: 'input',
+                    type: '0',
+                    edgeType: '0',
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'output',
+                    type: '0',
+                    edgeType: '0',
+                }
+            ]
+        },
     },
 };
 
@@ -570,7 +631,29 @@ const menuItems = [
             name: 'New collision start',
             tag: '',
         }
-    }
+    },
+    {
+        text: 'Trigger enter',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.TRIGGER_ENTER,
+        attributes: {
+            name: 'New trigger enter',
+            tag: '',
+        }
+    },
+    {
+        text: 'Spawn',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.SPAWN,
+        attributes: {
+            name: 'New spawn',
+            position: {
+                x: 0,
+                y: 0,
+                z: 0,
+            }
+        },
+    },
 ];
 
 const styleString = `
