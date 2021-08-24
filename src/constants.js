@@ -1,0 +1,23 @@
+export const EDGES = {
+    BASE: 0,
+};
+
+export const NODES = {
+    START: 0,
+    INTERVAL: 1,
+    TRANSLATION: 2,
+    SCALE: 3,
+    ROTATION: 4,
+    TRANSLATE: 5,
+    RESIZE: 6,
+    ROTATE: 7,
+    VISIBILITY: 8,
+    PLAYER_CONTROLLER: 9,
+    DELAY: 10,
+    GRAPH_TRANSMITTER: 11,
+    GRAPH_RECEIVER: 12,
+    BIRD_CONTROLLER: 13,
+    COLLISION_START: 14,
+    TRIGGER_ENTER: 15,
+    SPAWN: 16,
+};
