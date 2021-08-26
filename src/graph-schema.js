@@ -14,6 +14,34 @@ const nodeContextMenu = [
     }
 ];
 
+const systemNodeStyle = {
+    fill: 'rgb(54, 67, 70, 0.8)',
+    stroke: '#7BB31A',
+    icon: '',
+    iconColor: '#7BB31A',
+};
+
+const actionNodeStyle = {
+    fill: 'rgb(54, 67, 70, 0.8)',
+    stroke: '#FF9C00',
+    icon: '',
+    iconColor: '#FF9C00',
+};
+
+const helperNodeStyle = {
+    fill: 'rgb(54, 67, 70, 0.8)',
+    stroke: '#8B88FF',
+    icon: '',
+    iconColor: '#8B88FF',
+};
+
+const eventNodeStyle = {
+    fill: 'rgb(54, 67, 70, 0.8)',
+    stroke: '#EEDB00',
+    icon: '',
+    iconColor: '#EEDB00',
+};
+
 export const graphSchema = {
     edges: {
         [EDGES.BASE]: {
@@ -27,10 +55,7 @@ export const graphSchema = {
     nodes: {
         [NODES.START]: {
             name: 'startState',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            icon: '',
-            iconColor: '#14CC47',
-            stroke: '#20292b',
+            ...systemNodeStyle,
             contextMenuItems: nodeContextMenu,
             outPorts: [
                 {
@@ -42,10 +67,7 @@ export const graphSchema = {
         },
         [NODES.INTERVAL]: {
             name: 'interval',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...helperNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -70,10 +92,7 @@ export const graphSchema = {
         },
         [NODES.TRANSLATION]: {
             name: 'translation',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...actionNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -84,10 +103,7 @@ export const graphSchema = {
         },
         [NODES.SCALE]: {
             name: 'scale',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...actionNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -98,10 +114,7 @@ export const graphSchema = {
         },
         [NODES.ROTATION]: {
             name: 'rotation',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...actionNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -112,10 +125,7 @@ export const graphSchema = {
         },
         [NODES.TRANSLATE]: {
             name: 'translate',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...actionNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -144,10 +154,7 @@ export const graphSchema = {
         },
         [NODES.RESIZE]: {
             name: 'resize',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...actionNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -172,10 +179,7 @@ export const graphSchema = {
         },
         [NODES.ROTATE]: {
             name: 'rotate',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...actionNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -200,10 +204,7 @@ export const graphSchema = {
         },
         [NODES.VISIBILITY]: {
             name: 'visibility',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...actionNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -214,10 +215,7 @@ export const graphSchema = {
         },
         [NODES.PLAYER_CONTROLLER]: {
             name: 'playerController',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...helperNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -228,10 +226,7 @@ export const graphSchema = {
         },
         [NODES.DELAY]: {
             name: 'delay',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...helperNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -256,10 +251,7 @@ export const graphSchema = {
         },
         [NODES.GRAPH_TRANSMITTER]: {
             name: 'graphTransmitter',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...helperNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -277,10 +269,7 @@ export const graphSchema = {
         },
         [NODES.GRAPH_RECEIVER]: {
             name: 'graphReceiver',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...helperNodeStyle,
             contextMenuItems: nodeContextMenu,
             outPorts: [
                 {
@@ -292,18 +281,12 @@ export const graphSchema = {
         },
         [NODES.BIRD_CONTROLLER]: {
             name: 'birdController',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...helperNodeStyle,
             contextMenuItems: nodeContextMenu,
         },
         [NODES.COLLISION_START]: {
             name: 'collisionStart',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...eventNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -321,10 +304,7 @@ export const graphSchema = {
         },
         [NODES.TRIGGER_ENTER]: {
             name: 'triggerEnter',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...eventNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {
@@ -342,10 +322,7 @@ export const graphSchema = {
         },
         [NODES.SPAWN]: {
             name: 'spawn',
-            fill: 'rgb(54, 67, 70, 0.8)',
-            stroke: '#20292b',
-            icon: '',
-            iconColor: '#FFFFFF',
+            ...actionNodeStyle,
             contextMenuItems: nodeContextMenu,
             attributes: [
                 {

@@ -7,32 +7,32 @@ const PLAYBOX = {
 };
 
 const styleString = `
-		.playbox > .content {
-			left: 0 !important;
-			top: 0 !important;
-			width: 100% !important;
-			height: 100% !important;
-		}
-		
-		.playbox > .content > .container > .content {
-			height: 100vh !important;
-			width: 100vw !important;
-			display: grid;
-			grid-template-areas: 'components graph graph graph'
-		}
-		
-		.playbox-graph {
-			grid-area: graph;
-			width: auto !important;
-		}
-		
-		.playbox-components-menu {
-			background-color: red;
-			height: 100%;
-			grid-area: components;
-			z-index: 0;
-		}
-	`;
+    .playbox > .content {
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    .playbox > .content > .container > .content {
+        height: 100vh !important;
+        width: 100vw !important;
+        display: grid;
+        grid-template-areas: 'components graph graph graph'
+    }
+    
+    .playbox-graph {
+        grid-area: graph;
+        width: auto !important;
+    }
+    
+    .playbox-components-menu {
+        background-color: red;
+        height: 100%;
+        grid-area: components;
+        z-index: 0;
+    }
+`;
 
 var styleSheet = document.createElement('style');
 styleSheet.type = 'text/css';
