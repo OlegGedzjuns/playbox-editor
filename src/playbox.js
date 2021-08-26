@@ -93,6 +93,7 @@ container.prepend(componentsMenu);
 
 editor.method('playbox', function () {
     const asset = editor.call('selector:items')[0];
+    editor.call('selector:clear');
 
     const fileUrl = asset.get('file.url');
     const fileHash = asset.get('file.hash');

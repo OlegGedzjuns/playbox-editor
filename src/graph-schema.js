@@ -1,5 +1,19 @@
 import { EDGES, NODES } from "./constants.js";
 
+const edgeContextMenu = [
+    {
+        text: 'Delete edge', 
+        action: 'EVENT_DELETE_EDGE'
+    }
+];
+
+const nodeContextMenu = [
+    {
+        text: 'Delete node',
+        action: 'EVENT_DELETE_NODE'
+    }
+];
+
 export const graphSchema = {
     edges: {
         [EDGES.BASE]: {
@@ -7,12 +21,7 @@ export const graphSchema = {
             strokeWidth: 1,
             smoothInOut: true,
             targetMarker: null,
-            contextMenuItems: [
-                {
-                    text: 'Delete edge',
-                    action: 'EVENT_DELETE_EDGE'
-                }
-            ],
+            contextMenuItems: edgeContextMenu,
         },
     },
     nodes: {
@@ -22,12 +31,7 @@ export const graphSchema = {
             icon: '',
             iconColor: '#14CC47',
             stroke: '#20292b',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE',
-                },
-            ],
+            contextMenuItems: nodeContextMenu,
             outPorts: [
                 {
                     name: 'output',
@@ -42,12 +46,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE',
-                },
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'intervalMs',
@@ -75,12 +74,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE',
-                },
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'direction',
@@ -94,12 +88,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'scaleFactor',
@@ -113,12 +102,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'angularVelocity',
@@ -132,12 +116,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'position',
@@ -169,12 +148,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'scale',
@@ -202,12 +176,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'angle',
@@ -235,12 +204,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'visible',
@@ -254,12 +218,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'speed',
@@ -273,12 +232,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'delayMs',
@@ -306,12 +260,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'entityGuid',
@@ -332,12 +281,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             outPorts: [
                 {
                     name: 'output',
@@ -352,12 +296,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ]
+            contextMenuItems: nodeContextMenu,
         },
         [NODES.COLLISION_START]: {
             name: 'collisionStart',
@@ -365,12 +304,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'tag',
@@ -391,12 +325,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'tag',
@@ -417,12 +346,7 @@ export const graphSchema = {
             stroke: '#20292b',
             icon: '',
             iconColor: '#FFFFFF',
-            contextMenuItems: [
-                {
-                    text: 'Delete',
-                    action: 'EVENT_DELETE_NODE'
-                }
-            ],
+            contextMenuItems: nodeContextMenu,
             attributes: [
                 {
                     name: 'position',
