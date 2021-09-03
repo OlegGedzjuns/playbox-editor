@@ -180,4 +180,55 @@ export const menuItems = [
             }
         },
     },
+    {
+        text: 'Key Press',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.KEY_PRESS,
+        attributes: {
+            name: 'New Key Press',
+            key: ''
+        },
+    },
+    {
+        text: 'Key Release',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.KEY_RELEASE,
+        attributes: {
+            name: 'New Key Release',
+            key: ''
+        },
+    },
+    {
+        text: 'Ray Cast',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.RAY_CAST,
+        attributes: {
+            name: 'New Ray Cast',
+        },
+    },
+    {
+        text: 'Self',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.SELF,
+        attributes: {
+            name: 'New Self'
+        }
+    },
+    {
+        text: 'Has Tags',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.SELF,
+        attributes: {
+            name: 'New Has Tags',
+            tags: ''
+        }
+    },
+    {
+        text: 'Destroy',
+        action: 'EVENT_ADD_NODE',
+        nodeType: NODES.DESTROY,
+        attributes: {
+            name: 'New Destroy'
+        }
+    }
 ];

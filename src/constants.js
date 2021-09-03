@@ -1,5 +1,11 @@
 export const EDGES = {
     BASE: 0,
+    NUMERIC: 1,
+    VEC2: 2,
+    VEC3: 3,
+    VEC4: 4,
+    ENTITY: 5,
+    FIRE: 6,
 };
 
 export const NODES = {
@@ -20,4 +26,10 @@ export const NODES = {
     COLLISION_START: 14,
     TRIGGER_ENTER: 15,
     SPAWN: 16,
+    KEY_PRESS: 17,
+    KEY_RELEASE: 18,
+    RAY_CAST: 19,
+    SELF: 20,
+    HAS_TAGS: 21,
+    DESTROY: 22,
 };

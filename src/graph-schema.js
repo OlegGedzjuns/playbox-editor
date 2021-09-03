@@ -42,15 +42,43 @@ const eventNodeStyle = {
     iconColor: '#EEDB00',
 };
 
+const edgeStyle = {
+    stroke: '#0379EE',
+    strokeWidth: 1,
+    smoothInOut: true,
+    targetMarker: null,
+}
+
 export const graphSchema = {
     edges: {
         [EDGES.BASE]: {
-            stroke: '#0379EE',
-            strokeWidth: 1,
-            smoothInOut: true,
-            targetMarker: null,
+            ...edgeStyle,
             contextMenuItems: edgeContextMenu,
         },
+        [EDGES.NUMERIC]: {
+            ...edgeStyle,
+            contextMenuItems: edgeContextMenu,
+        },
+        [EDGES.VEC2]: {
+            ...edgeStyle,
+            contextMenuItems: edgeContextMenu,
+        },
+        [EDGES.VEC3]: {
+            ...edgeStyle,
+            contextMenuItems: edgeContextMenu,
+        },
+        [EDGES.VEC4]: {
+            ...edgeStyle,
+            contextMenuItems: edgeContextMenu,
+        },
+        [EDGES.ENTITY]: {
+            ...edgeStyle,
+            contextMenuItems: edgeContextMenu,
+        },
+        [EDGES.FIRE]: {
+            ...edgeStyle,
+            contextMenuItems: edgeContextMenu,
+        }
     },
     nodes: {
         [NODES.START]: {
@@ -60,8 +88,7 @@ export const graphSchema = {
             outPorts: [
                 {
                     name: 'output',
-                    type: '0',
-                    edgeType: '0',
+                    type: EDGES.FIRE,
                 }
             ]
         },
@@ -78,15 +105,13 @@ export const graphSchema = {
             inPorts: [
                 {
                     name: 'input',
-                    type: '0',
-                    edgeType: '0'
+                    type: EDGES.FIRE,
                 }
             ],
             outPorts: [
                 {
                     name: 'output',
-                    type: '0',
-                    edgeType: '0',
+                    type: EDGES.FIRE,
                 }
             ]
         },
@@ -140,15 +165,13 @@ export const graphSchema = {
             inPorts: [
                 {
                     name: 'input',
-                    type: '0',
-                    edgeType: '0',
+                    type: EDGES.FIRE,
                 }
             ],
             outPorts: [
                 {
                     name: 'output',
-                    type: '0',
-                    edgeType: '0',
+                    type: EDGES.FIRE,
                 }
             ]
         },
@@ -165,15 +188,13 @@ export const graphSchema = {
             inPorts: [
                 {
                     name: 'input',
-                    type: '0',
-                    edgeType: '0',
+                    type: EDGES.FIRE,
                 }
             ],
             outPorts: [
                 {
                     name: 'output',
-                    type: '0',
-                    edgeType: '0',
+                    type: EDGES.FIRE,
                 }
             ]
         },
@@ -190,15 +211,13 @@ export const graphSchema = {
             inPorts: [
                 {
                     name: 'input',
-                    type: '0',
-                    edgeType: '0',
+                    type: EDGES.FIRE,
                 }
             ],
             outPorts: [
                 {
                     name: 'output',
-                    type: '0',
-                    edgeType: '0',
+                    type: EDGES.FIRE,
                 }
             ]
         },
@@ -315,8 +334,7 @@ export const graphSchema = {
             outPorts: [
                 {
                     name: 'output',
-                    type: '0',
-                    edgeType: '0',
+                    type: EDGES.FIRE
                 }
             ]
         },
@@ -327,23 +345,137 @@ export const graphSchema = {
             attributes: [
                 {
                     name: 'position',
-                    type: 'VEC_3_INPUT',
+                    type: 'VEC_3_INPUT'
                 }
             ],
             inPorts: [
                 {
                     name: 'input',
-                    type: '0',
-                    edgeType: '0',
+                    type: EDGES.FIRE
                 }
             ],
             outPorts: [
                 {
                     name: 'output',
-                    type: '0',
-                    edgeType: '0',
+                    type: EDGES.FIRE
                 }
             ]
         },
+        [NODES.KEY_PRESS]: {
+            name: 'Key Press',
+            ...eventNodeStyle,
+            contextMenuItems: nodeContextMenu,
+            attributes: [
+                {
+                    name: 'key',
+                    type: 'TEXT_INPUT'
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'fire',
+                    type: EDGES.FIRE
+                }
+            ]
+        },
+        [NODES.KEY_RELEASE]: {
+            name: 'Key Press',
+            ...eventNodeStyle,
+            contextMenuItems: nodeContextMenu,
+            attributes: [
+                {
+                    name: 'key',
+                    type: 'TEXT_INPUT'
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'fire',
+                    type: EDGES.FIRE
+                }
+            ]
+        },
+        [NODES.RAY_CAST]: {
+            name: 'Ray Cast',
+            ...helperNodeStyle,
+            contextMenuItems: nodeContextMenu,
+            inPorts: [
+                {
+                    name: 'When',
+                    type: EDGES.FIRE
+                },
+                {
+                    name: 'Origin',
+                    type: EDGES.VEC3
+                },
+                {
+                    name: 'Direction',
+                    type: EDGES.VEC3
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'Entity',
+                    type: EDGES.ENTITY
+                }
+            ]
+        },
+        [NODES.SELF]: {
+            name: 'Self',
+            ...helperNodeStyle,
+            contextMenuItems: nodeContextMenu,
+            outPorts: [
+                {
+                    name: 'entity',
+                    type: EDGES.ENTITY
+                },
+                {
+                    name: 'position',
+                    type: EDGES.VEC3
+                },
+                {
+                    name: 'rotation',
+                    type: EDGES.VEC3
+                }
+            ]
+        },
+        [NODES.HAS_TAGS]: {
+            name: 'Has Tags',
+            ...helperNodeStyle,
+            contextMenuItems: nodeContextMenu,
+            attributes: [
+                {
+                    name: 'Tags',
+                    type: 'TEXT_INPUT'
+                }
+            ],
+            inPorts: [
+                {
+                    name: 'entity',
+                    type: EDGES.ENTITY
+                }
+            ],
+            outPorts: [
+                {
+                    name: 'entity',
+                    type: EDGES.ENTITY
+                },
+                {
+                    name: 'output',
+                    type: EDGES.FIRE
+                }
+            ]
+        },
+        [NODES.DESTROY]: {
+            name: 'Destroy',
+            ...helperNodeStyle,
+            contextMenuItems: nodeContextMenu,
+            inPorts: [
+                {
+                    name: 'entity',
+                    type: EDGES.ENTITY
+                }
+            ]
+        }
     },
 };
