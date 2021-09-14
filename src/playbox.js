@@ -87,13 +87,9 @@ btnPublish.class.add('publish');
 panelPlaycanvas.append(btnPublish);
 
 panelPlaycanvas.on('click', () => {
-    const sceneData = {
-        scene: +config.scene.uniqueId,
-        settings: editor.call('sceneSettings').json(),
-        entities: editor.call('entities:raw').json()
-    }
-
-    socket.emit('save-level', sceneData, (result) => console.log(result));
+    const connection = editor.call('realtime:connection');
+    const scene = connection.get('scenes', '' + config.scene.uniqueId);
+    socket.emit('save-level', scene.data, (result) => console.log(result));
 });
 
 var styleSheet = document.createElement('style');
