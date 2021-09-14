@@ -34,6 +34,68 @@ const styleString = `
     }
 `;
 
+const socket = io('ws://localhost:8080', {
+    auth: { username: 'admin' },
+    perMessageDeflate: {
+    zlibDeflateOptions: {
+        // See zlib defaults.
+        chunkSize: 1024,
+        memLevel: 7,
+        level: 3
+    },
+    zlibInflateOptions: {
+        chunkSize: 10 * 1024
+    },
+    // Other options settable:
+    clientNoContextTakeover: true, // Defaults to negotiated value.
+    serverNoContextTakeover: true, // Defaults to negotiated value.
+    serverMaxWindowBits: 10, // Defaults to negotiated value.
+    // Below options specified as default values.
+    concurrencyLimit: 10, // Limits zlib concurrency for perf.
+    threshold: 1024 // Size (in bytes) below which messages
+    // should not be compressed.
+    }
+});
+
+const pickerPublish = document.getElementsByClassName('ui-panel noHeader picker-publish flex')[0];
+
+const div = document.createElement('div');
+div.classList.add('content');
+pickerPublish.append(div);
+
+var panelPlaycanvas = new ui.Panel();
+panelPlaycanvas.flex = true;
+panelPlaycanvas.class.add('buttons');
+div.append(panelPlaycanvas.element);
+
+var labelIcon = new ui.Label({
+    text: '&#58386;',
+    unsafe: true
+});
+labelIcon.class.add('icon');
+panelPlaycanvas.append(labelIcon);
+
+var labelDesc = new ui.Label({
+    text: 'Publish your scene publicly on PlaySandbox.'
+});
+labelDesc.class.add('desc');
+panelPlaycanvas.append(labelDesc);
+
+// publish button
+var btnPublish = new ui.Button({ text: 'Publish To PlaySandbox' });
+btnPublish.class.add('publish');
+panelPlaycanvas.append(btnPublish);
+
+panelPlaycanvas.on('click', () => {
+    const sceneData = {
+        scene: +config.scene.uniqueId,
+        settings: editor.call('sceneSettings').json(),
+        entities: editor.call('entities:raw').json()
+    }
+
+    socket.emit('save-level', sceneData, (result) => console.log(result));
+});
+
 var styleSheet = document.createElement('style');
 styleSheet.type = 'text/css';
 styleSheet.innerText = styleString;

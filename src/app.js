@@ -1,5 +1,9 @@
 window.onload = () => {
+	if (!window.location.href.includes('playcanvas.com/editor/scene'))
+		return;
+
 	const scripts = [
+		'socket-io.js',
 		'constants.js',
 		'menu-items.js',
 		'graph-schema.js',
