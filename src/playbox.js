@@ -106,6 +106,99 @@ button.class.add('pc-icon');
 button.on('click', () => editor.call('playbox'));
 toolbar.append(button);
 
+let assets = {};
+
+var onLoad = function (data) {
+    var load = function (asset) {
+        var connection = editor.call('realtime:connection');
+        const uniqueId = parseInt(asset.uniqueId, 10);
+
+        var doc = connection.get('assets', '' + uniqueId);
+        assets[uniqueId] = doc;
+
+        doc.on('error', err => {
+            console.log(err);
+        });
+
+        doc.on('load', () => {
+            var assetData = doc.data;
+            if (!assetData) {
+                log.error('Could not load asset: ' + uniqueId);
+                editor.call('status:error', 'Could not load asset: ' + uniqueId);
+                doc.unsubscribe();
+                doc.destroy();
+                return callback && callback();
+            }
+
+            assetData.id = parseInt(assetData.item_id, 10);
+            assetData.uniqueId = uniqueId;
+            assetData.createdAt = asset.createdAt;
+
+            // delete unnecessary fields
+            delete assetData.item_id;
+            delete assetData.branch_id;
+
+            if (assetData.file) {
+                assetData.file.url = getFileUrl(assetData.id, assetData.revision, assetData.file.filename);
+
+                if (assetData.file.variants) {
+                    for (const key in assetData.file.variants) {
+                        assetData.file.variants[key].url = getFileUrl(assetData.id, assetData.revision, assetData.file.variants[key].filename);
+                    }
+                }
+            }
+
+            // allow duplicate values in data.frameKeys of sprite asset
+            var options = null;
+            if (assetData.type === 'sprite') {
+                options = {
+                    pathsWithDuplicates: ['data.frameKeys']
+                };
+            }
+        });
+    };
+
+    if (data.length) {
+        var connection = editor.call('realtime:connection');
+
+        // do bulk subsribe in batches of 'batchSize' assets
+        var batchSize = 256;
+        var startBatch = 0;
+        var total = data.length;
+
+        while (startBatch < total) {
+            // start bulk subscribe
+            connection.startBulk();
+            for (let i = startBatch; i < startBatch + batchSize && i < total; i++) {
+                load(data[i]);
+            }
+            // end bulk subscribe and send message to server
+            connection.endBulk();
+
+            startBatch += batchSize;
+        }
+    }
+};
+
+const loadButton = new ui.Button({
+    text: '&#58386;',
+});
+loadButton.class.add('pc-icon');
+loadButton.on('click', () => {
+    Ajax({
+        url: '{{url.api}}/projects/{{project.id}}/assets?branchId={{self.branch.id}}&view=designer',
+        auth: true
+    })
+    .on('load', function (status, data) {
+        onLoad(data);
+        console.log(assets);
+    })
+    .on('error', function (status, evt) {
+        console.log(status, evt);
+    });
+});
+toolbar.append(loadButton);
+
 Tooltip.attach({
     target: button.element,
     text: 'Playbox',
