@@ -124,7 +124,6 @@ var onLoad = function (data) {
             var assetData = doc.data;
             if (!assetData) {
                 log.error('Could not load asset: ' + uniqueId);
-                editor.call('status:error', 'Could not load asset: ' + uniqueId);
                 doc.unsubscribe();
                 doc.destroy();
                 return callback && callback();
