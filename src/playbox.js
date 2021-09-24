@@ -34,7 +34,7 @@ const styleString = `
     }
 `;
 
-const socket = io('wss://playsandbox.meta.space', {
+const socket = io('wss://playsandbox.meta.space:8080', {
     auth: { username: 'admin' },
     perMessageDeflate: {
     zlibDeflateOptions: {
